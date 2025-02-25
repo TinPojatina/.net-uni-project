@@ -1,0 +1,52 @@
+﻿@model FinanceTracker.Classes.Transaction
+
+<div class="modal fade" id="transactionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Transaction</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page="/Transactions" asp-page-handler="Create">
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <input type="text" class="form-control" asp-for="Description" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount:</label>
+                        <input type="number" class="form-control" asp-for="Amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category:</label>
+                        <select class="form-control" asp-for="Category">
+                            <option value="Salary">Salary</option>
+                            <option value="Food">Food</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Method:</label>
+                        <input type="text" class="form-control" asp-for="PaymentMethod" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <input type="date" class="form-control" asp-for="Date" id="transactionDate" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set the default date input to today's date
+    document.addEventListener("DOMContentLoaded", function () {
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById("transactionDate").value = today;
+    });
+</script>

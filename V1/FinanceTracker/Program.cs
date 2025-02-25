@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using FinanceTracker.Data;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace FinanceTracker
 {
@@ -10,16 +12,23 @@ namespace FinanceTracker
             var builder = WebApplication.CreateBuilder(args);
 
             // Configure Entity Framework Core with SQLite
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            var connectionString = builder.Configuration.GetConnectionString("FinanceDb");
+            builder.Services.AddDbContext<FinanceContext>(options =>
                 options.UseSqlite(connectionString));
 
-            // Add services to the container.
+            // Add Razor Pages services
             builder.Services.AddRazorPages();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // Apply database migrations automatically
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<FinanceContext>();
+                db.Database.Migrate();
+            }
+
+            // Configure the HTTP request pipeline
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
@@ -28,12 +37,9 @@ namespace FinanceTracker
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
             app.UseAuthorization();
-
             app.MapRazorPages();
-
             app.Run();
         }
     }

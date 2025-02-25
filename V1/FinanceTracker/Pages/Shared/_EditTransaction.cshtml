@@ -1,0 +1,44 @@
+﻿@model FinanceTracker.Classes.Transaction
+
+<div class="modal fade" id="editTransactionModal-@Model.Id" tabindex="-1" aria-labelledby="editTransactionModalLabel-@Model.Id" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Transaction</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page="/Transactions" asp-page-handler="Edit">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="mb-3">
+                        <label>Description:</label>
+                        <input type="text" class="form-control" asp-for="Description" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Amount:</label>
+                        <input type="number" class="form-control" asp-for="Amount" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Category:</label>
+                        <select class="form-control" asp-for="Category">
+                            <option value="Food">Food</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Payment Method:</label>
+                        <input type="text" class="form-control" asp-for="PaymentMethod" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Date:</label>
+                        <input type="date" class="form-control" asp-for="Date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

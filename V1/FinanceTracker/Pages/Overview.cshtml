@@ -1,0 +1,41 @@
+﻿@page
+@model FinanceTracker.Pages.OverviewModel
+@{
+    ViewData["Title"] = "Overview";
+}
+
+<h2>Transaction Overview</h2>
+
+<!-- Button to Open the Add Transaction Modal -->
+<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#transactionModal">
+    Add Transaction
+</button>
+
+<!-- Include Add Transaction Modal -->
+@await Html.PartialAsync("_AddTransactionModal", new FinanceTracker.Classes.Transaction())
+
+<!-- Pie Chart -->
+<canvas id="transactionsChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var ctx = document.getElementById('transactionsChart').getContext('2d');
+
+        var chartData = @Html.Raw(Json.Serialize(Model.ChartData));
+        var totalIncome = @Html.Raw(Model.TotalIncome);
+        var totalOutgoing = chartData.reduce((sum, value) => sum + value, 0);
+        var remainingBalance = totalIncome - totalOutgoing;
+
+        var chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Remaining Balance', 'Food', 'Rent', 'Utilities', 'Entertainment', 'Other'],
+                datasets: [{
+                    data: [remainingBalance, ...chartData],
+                    backgroundColor: ['green', 'red', 'blue', 'orange', 'purple', 'gray']
+                }]
+            }
+        });
+    });
+</script>

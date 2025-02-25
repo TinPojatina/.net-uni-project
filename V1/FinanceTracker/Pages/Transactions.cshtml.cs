@@ -6,24 +6,70 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FinanceTracker.Classes;
-using FinanceTracker.Data;
 
 namespace FinanceTracker.Pages
 {
     public class TransactionsModel : PageModel
     {
-        private readonly FinanceTracker.Data.ApplicationDbContext _context;
+        private readonly FinanceContext _context;
 
-        public TransactionsModel(FinanceTracker.Data.ApplicationDbContext context)
+        public TransactionsModel(FinanceContext context)
         {
             _context = context;
         }
 
-        public IList<Transaction> Transaction { get;set; } = default!;
+        public List<Transaction> Transactions { get; set; } = new List<Transaction>();
+
+        [BindProperty(SupportsGet = true)]
+        public string SortOrder { get; set; } = "desc";
+
+        [BindProperty(SupportsGet = true)]
+        public string FilterType { get; set; } = "all";
+
+        [BindProperty(SupportsGet = true)]
+        public string SortBy { get; set; } = "date";
 
         public async Task OnGetAsync()
         {
-            Transaction = await _context.Transaction.ToListAsync();
+            IQueryable<Transaction> query = _context.Transactions;
+
+            // Filtering: Show all, only income, or only expenses
+            if (FilterType == "income")
+                query = query.Where(t => t.IsIncome);
+            else if (FilterType == "expense")
+                query = query.Where(t => !t.IsIncome);
+
+            // Sorting logic
+            query = SortBy switch
+            {
+                "amount" => (SortOrder == "desc") ? query.OrderByDescending(t => (double)t.Amount) : query.OrderBy(t => (double)t.Amount),
+                _ => (SortOrder == "desc") ? query.OrderByDescending(t => t.Date) : query.OrderBy(t => t.Date),
+            };
+
+            Transactions = await query.ToListAsync();
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            var transaction = await _context.Transactions.FindAsync(id);
+            if (transaction != null)
+            {
+                _context.Transactions.Remove(transaction);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostCreateAsync(Transaction transaction)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            _context.Transactions.Add(transaction);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("Transactions");
         }
     }
 }

@@ -1,18 +1,17 @@
-﻿namespace FinanceTracker.Classes
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FinanceTracker.Classes
 {
     public class Transaction
     {
+        [Key]
         public int Id { get; set; }
-        public string Description { get; set; }
+        [Required]
         public decimal Amount { get; set; }
+        public string? Description { get; set; }
+        public Category Category { get; set; }
         public DateTime Date { get; set; }
-
-        public Transaction(int id, string description, decimal amount, DateTime date)
-        {
-            Id = id;
-            Description = description;
-            Amount = amount;
-            Date = date;
-        }
+        public bool IsIncome { get; set; }
+        public string? PaymentMethod { get; set; }
     }
 }

@@ -1,48 +1,71 @@
 ﻿@page
 @model FinanceTracker.Pages.TransactionsModel
-
 @{
     ViewData["Title"] = "Transactions";
+    string newSortOrder = Model.SortOrder == "asc" ? "desc" : "asc";
 }
 
-<h1>Transactions</h1>
+<h2>Transaction List</h2>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
+<!-- Filter by Type -->
+<form method="get" class="mb-3">
+    <label for="filterType">Filter:</label>
+    <select name="FilterType" id="filterType" class="form-control d-inline w-auto" onchange="this.form.submit()">
+        <option value="all" selected="@(Model.FilterType == "all" ? "selected" : null)">All</option>
+        <option value="income" selected="@(Model.FilterType == "income" ? "selected" : null)">Income</option>
+        <option value="expense" selected="@(Model.FilterType == "expense" ? "selected" : null)">Expense</option>
+    </select>
+    <input type="hidden" name="SortOrder" value="@Model.SortOrder" />
+    <input type="hidden" name="SortBy" value="@Model.SortBy" />
+</form>
+
+<!-- Sorting Buttons -->
+<div class="mb-3">
+    <a href="?SortBy=date&SortOrder=@newSortOrder&FilterType=@Model.FilterType" class="btn btn-secondary">
+        Sort by Date (@(Model.SortOrder == "asc" ? "⬆️" : "⬇️"))
+    </a>
+    <a href="?SortBy=amount&SortOrder=@newSortOrder&FilterType=@Model.FilterType" class="btn btn-secondary">
+        Sort by Amount (@(Model.SortOrder == "asc" ? "⬆️" : "⬇️"))
+    </a>
+</div>
+
+<!-- Transaction Table -->
+<table class="table table-striped mt-3">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Transaction[0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Transaction[0].Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Transaction[0].Date)
-            </th>
-            <th></th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Payment Method</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Transaction) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var transaction in Model.Transactions)
+        {
+            <tr>
+                <td>@transaction.Description</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Category</td>
+                <td>@transaction.Date.ToString("yyyy-MM-dd")</td>
+                <td>@transaction.PaymentMethod</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editTransactionModal-@transaction.Id">
+                        Edit
+                    </button>
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteTransactionModal-@transaction.Id">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<!-- Include Modals -->
+@foreach (var transaction in Model.Transactions)
+{
+    @await Html.PartialAsync("_EditTransaction", transaction)
+    @await Html.PartialAsync("_DeleteTransaction", transaction)
+}
