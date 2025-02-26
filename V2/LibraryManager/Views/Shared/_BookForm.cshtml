@@ -1,0 +1,27 @@
+﻿@model LibraryManager.Models.Book
+
+<!-- Book Form Modal -->
+<div class="modal fade" id="bookFormModal" tabindex="-1" aria-labelledby="bookFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@(Model.Id == 0 ? "Add New Book" : "Edit Book")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-controller="Book" asp-action="@(Model.Id == 0 ? "Create" : "Edit")" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" asp-for="Title" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Author</label>
+                        <input type="text" class="form-control" asp-for="Author" required />
+                    </div>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

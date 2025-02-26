@@ -15,107 +15,7 @@ namespace LibraryManager.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
-
-            modelBuilder.Entity("LibraryManager.Models.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("RegisteredAt")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "f3a2c8e9-9b1e-4d83-8e2f-987654321def",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "9dc29ae7-63e3-4a0d-ae79-83c4284b1cc2",
-                            DateOfBirth = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "admin@example.com",
-                            EmailConfirmed = true,
-                            FirstName = "Admin",
-                            LastName = "User",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@EXAMPLE.COM",
-                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEC1u81iWdb6+rhuXkkrTugZQ+r2FgB98WGa7KBJs75MTgqetF4w6i6HH0o6EzQ4ZVg==",
-                            PhoneNumberConfirmed = false,
-                            RegisteredAt = new DateTime(2025, 2, 25, 23, 30, 3, 939, DateTimeKind.Utc).AddTicks(2233),
-                            SecurityStamp = "b88a5627-4547-4379-8b27-e9d4df4452ea",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@example.com"
-                        });
-                });
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
 
             modelBuilder.Entity("LibraryManager.Models.Book", b =>
                 {
@@ -127,13 +27,33 @@ namespace LibraryManager.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("AvailableCopies")
+                    b.Property<string>("CoverImageUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsAvailable")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PublishedYear")
+                    b.Property<int>("PublicationYear")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -146,53 +66,57 @@ namespace LibraryManager.Migrations
                         {
                             Id = 1,
                             Author = "F. Scott Fitzgerald",
-                            AvailableCopies = 5,
-                            PublishedYear = 1925,
-                            Title = "The Great Gatsby"
+                            CoverImageUrl = "https://example.com/gatsby.jpg",
+                            Description = "A novel about the American dream and the roaring 1920s.",
+                            Genre = "Classic",
+                            ISBN = "9780743273565",
+                            IsAvailable = true,
+                            PublicationYear = 1925,
+                            Title = "The Great Gatsby",
+                            UserId = "admin-user-id"
                         },
                         new
                         {
                             Id = 2,
-                            Author = "George Orwell",
-                            AvailableCopies = 3,
-                            PublishedYear = 1949,
-                            Title = "1984"
+                            Author = "Harper Lee",
+                            CoverImageUrl = "https://example.com/mockingbird.jpg",
+                            Description = "A novel about racial injustice in the Deep South.",
+                            Genre = "Fiction",
+                            ISBN = "9780061120084",
+                            IsAvailable = false,
+                            PublicationYear = 1960,
+                            Title = "To Kill a Mockingbird",
+                            UserId = "admin-user-id"
                         },
                         new
                         {
                             Id = 3,
-                            Author = "Harper Lee",
-                            AvailableCopies = 4,
-                            PublishedYear = 1960,
-                            Title = "To Kill a Mockingbird"
+                            Author = "George Orwell",
+                            CoverImageUrl = "https://example.com/1984.jpg",
+                            Description = "A dystopian social science fiction novel and cautionary tale.",
+                            Genre = "Dystopian",
+                            ISBN = "9780451524935",
+                            IsAvailable = true,
+                            PublicationYear = 1949,
+                            Title = "1984",
+                            UserId = "admin-user-id"
                         },
                         new
                         {
                             Id = 4,
                             Author = "Herman Melville",
-                            AvailableCopies = 6,
-                            PublishedYear = 1851,
-                            Title = "Moby Dick"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Author = "Jane Austen",
-                            AvailableCopies = 7,
-                            PublishedYear = 1813,
-                            Title = "Pride and Prejudice"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Author = "Leo Tolstoy",
-                            AvailableCopies = 4,
-                            PublishedYear = 1869,
-                            Title = "War and Peace"
+                            CoverImageUrl = "https://example.com/mobydick.jpg",
+                            Description = "A narrative of the adventures of the whaling ship Pequod.",
+                            Genre = "Adventure",
+                            ISBN = "9781503280786",
+                            IsAvailable = true,
+                            PublicationYear = 1851,
+                            Title = "Moby-Dick",
+                            UserId = "admin-user-id"
                         });
                 });
 
-            modelBuilder.Entity("LibraryManager.Models.Borrowing", b =>
+            modelBuilder.Entity("LibraryManager.Models.Loan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -201,7 +125,20 @@ namespace LibraryManager.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("BorrowDate")
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ExtensionCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsReturned")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LoanDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("ReturnDate")
@@ -215,45 +152,19 @@ namespace LibraryManager.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Borrowings");
+                    b.ToTable("Loans");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            BookId = 1,
-                            BorrowDate = new DateTime(2025, 2, 15, 23, 30, 3, 991, DateTimeKind.Utc).AddTicks(1405),
-                            UserId = "f3a2c8e9-9b1e-4d83-8e2f-987654321def"
-                        },
-                        new
-                        {
-                            Id = 2,
                             BookId = 2,
-                            BorrowDate = new DateTime(2025, 2, 20, 23, 30, 3, 991, DateTimeKind.Utc).AddTicks(1413),
-                            UserId = "f3a2c8e9-9b1e-4d83-8e2f-987654321def"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BookId = 4,
-                            BorrowDate = new DateTime(2025, 2, 18, 23, 30, 3, 991, DateTimeKind.Utc).AddTicks(1415),
-                            UserId = "f3a2c8e9-9b1e-4d83-8e2f-987654321def"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BookId = 5,
-                            BorrowDate = new DateTime(2025, 2, 22, 23, 30, 3, 991, DateTimeKind.Utc).AddTicks(1416),
-                            UserId = "f3a2c8e9-9b1e-4d83-8e2f-987654321def"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BookId = 6,
-                            BorrowDate = new DateTime(2025, 2, 24, 23, 30, 3, 991, DateTimeKind.Utc).AddTicks(1417),
-                            UserId = "f3a2c8e9-9b1e-4d83-8e2f-987654321def"
+                            DueDate = new DateTime(2024, 3, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExtensionCount = 0,
+                            IsReturned = false,
+                            LoanDate = new DateTime(2024, 2, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Notes = "First loaned book.",
+                            UserId = "user1-id"
                         });
                 });
 
@@ -281,14 +192,6 @@ namespace LibraryManager.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "b1d4b06d-7a21-4c72-bd7a-123456789abc",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -312,6 +215,70 @@ namespace LibraryManager.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -340,9 +307,11 @@ namespace LibraryManager.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderDisplayName")
@@ -372,13 +341,6 @@ namespace LibraryManager.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "f3a2c8e9-9b1e-4d83-8e2f-987654321def",
-                            RoleId = "b1d4b06d-7a21-4c72-bd7a-123456789abc"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -387,9 +349,11 @@ namespace LibraryManager.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
@@ -400,7 +364,7 @@ namespace LibraryManager.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("LibraryManager.Models.Borrowing", b =>
+            modelBuilder.Entity("LibraryManager.Models.Loan", b =>
                 {
                     b.HasOne("LibraryManager.Models.Book", "Book")
                         .WithMany()
@@ -408,15 +372,7 @@ namespace LibraryManager.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LibraryManager.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Book");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -430,7 +386,7 @@ namespace LibraryManager.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("LibraryManager.Models.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -439,7 +395,7 @@ namespace LibraryManager.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("LibraryManager.Models.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -454,7 +410,7 @@ namespace LibraryManager.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LibraryManager.Models.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -463,7 +419,7 @@ namespace LibraryManager.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("LibraryManager.Models.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

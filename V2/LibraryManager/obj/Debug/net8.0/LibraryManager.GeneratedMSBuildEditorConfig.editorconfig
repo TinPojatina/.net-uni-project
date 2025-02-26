@@ -1,11 +1,19 @@
 is_global = true
 build_property.TargetFramework = net8.0
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = LibraryManager
 build_property.RootNamespace = LibraryManager
@@ -18,20 +26,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\tinp9\source\repos\TinPojatina\.net-uni-project\V2\LibraryManager
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Books/BooksTable.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcQm9va3NUYWJsZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Books/UserBorrowing.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcVXNlckJvcnJvd2luZy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Books/_BookSearchResults.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va3NcX0Jvb2tTZWFyY2hSZXN1bHRzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Home/Loan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2FuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Home/MyLoans.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNeUxvYW5zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Home/Privacy.cshtml]
@@ -42,28 +46,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_AddBookModal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZGRCb29rTW9kYWwuY3NodG1s
+[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/LoanTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXExvYW5UYWJsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_BookList.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Cb29rTGlzdC5jc2h0bWw=
+[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_BookCard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Cb29rQ2FyZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_BorrowBookModal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Cb3Jyb3dCb29rTW9kYWwuY3NodG1s
+[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_BookForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Cb29rRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_LoginModal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbk1vZGFsLmNzaHRtbA==
+[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_NavBar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9OYXZCYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_RegisterModal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZWdpc3Rlck1vZGFsLmNzaHRtbA==
+[C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_RegisterPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9SZWdpc3RlclBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/tinp9/source/repos/TinPojatina/.net-uni-project/V2/LibraryManager/Views/Shared/_ValidationScriptsPartial.cshtml]

@@ -1,96 +1,44 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using LibraryManager.Models;
-using LibraryManager.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 
-namespace LibraryManager.Controllers
+public class AccountController : Controller
 {
-    public class AccountController : Controller
+    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public AccountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
-
-        // LOGIN
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return PartialView("_LoginModal", new LoginViewModel());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
-        {
-            if (!ModelState.IsValid)
-            {
-                return PartialView("_LoginModal", model);
-            }
-
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                ModelState.AddModelError("", "Invalid login attempt.");
-                return PartialView("_LoginModal", model);
-            }
-
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
-
-            if (result.Succeeded)
-            {
-                // If returnUrl exists and is a local URL, use it; otherwise, refresh page
-                return Json(new { success = true, returnUrl = Url.IsLocalUrl(returnUrl) ? returnUrl : "" });
-            }
-
-            ModelState.AddModelError("", "Invalid login attempt.");
-            return PartialView("_LoginModal", model);
-        }
-
-
-
-        // REGISTER
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return PartialView("_RegisterModal", new RegisterViewModel());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return Json(new { success = true });
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-            }
-
-            return PartialView("_RegisterModal", model);
-        }
-
-
-        // LOGOUT
-        [Authorize]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("BooksTable", "Books");
-        }
+        _signInManager = signInManager;
+        _userManager = userManager;
     }
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+    [HttpPost]
+    public async Task<IActionResult> Login([FromBody] LoginDto model)
+    {
+        if (model == null) return BadRequest();
+
+        // Find user by email
+        var user = await _userManager.FindByEmailAsync(model.Email);
+        if (user == null) return Unauthorized(); // Email doesn't exist
+
+        // Check password
+        var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
+        if (!result.Succeeded) return Unauthorized(); // Invalid password
+
+        // Actually sign the user in
+        await _signInManager.SignInAsync(user, isPersistent: false);
+        return Ok();
+    }
+}
+
+// For clarity, define a small model for login
+public class LoginDto
+{
+    public string Email { get; set; }
+    public string Password { get; set; }
 }

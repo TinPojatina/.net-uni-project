@@ -1,49 +1,97 @@
-﻿@{
-    ViewData["Title"] = "Library Manager";
+﻿@model IEnumerable<LibraryManager.Models.Book>
+
+@{
+    ViewData["Title"] = "Library Books";
 }
 
 <div class="container mt-4">
-    <h2 class="text-center">Find Your Next Book</h2>
+    <h2 class="text-center fw-bold">📚 Library Books</h2>
 
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <input type="text" id="bookSearchInput" class="form-control" placeholder="Search for a book...">
+    <!-- Filters -->
+    <form id="filterForm" method="get" class="row g-3 mb-3 bg-light p-3 rounded shadow-sm">
+        <div class="col-md-4">
+            <input type="text" id="searchInput" name="search" class="form-control" placeholder="Search by Title, Author, or ISBN" value="@Context.Request.Query["search"]">
         </div>
+        <div class="col-md-3">
+            <select name="genre" class="form-control">
+                <option value="">All Genres</option>
+                @foreach (var genre in Model.Select(b => b.Genre).Distinct())
+                {
+                    <option value="@genre" selected="@(Context.Request.Query["genre"] == genre)">@genre</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select name="isAvailable" class="form-control">
+                <option value="">All</option>
+                <option value="true" selected="@(Context.Request.Query["isAvailable"] == "true")">Available</option>
+                <option value="false" selected="@(Context.Request.Query["isAvailable"] == "false")">Checked Out</option>
+            </select>
+        </div>
+        <div class="col-md-3 text-end">
+            <button type="submit" class="btn btn-primary">🔍 Filter</button>
+        </div>
+    </form>
+
+    <!-- Sorting Controls -->
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-outline-secondary me-2" href="javascript:void(0)" onclick="sortTable('title')">Title ⬍</a>
+        <a class="btn btn-outline-secondary me-2" href="javascript:void(0)" onclick="sortTable('author')">Author ⬍</a>
+        <a class="btn btn-outline-secondary me-2" href="javascript:void(0)" onclick="sortTable('year')">Year ⬍</a>
     </div>
 
-    <div class="row mt-3">
-        <div class="col-md-8 offset-md-2">
-            <div id="searchResults"></div>
-        </div>
+    <!-- Books Table -->
+    <div class="table-responsive">
+        <table id="booksTable" class="table table-hover table-bordered shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>ISBN</th>
+                    <th>Year</th>
+                    <th>Genre</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.ISBN</td>
+                        <td>@book.PublicationYear</td>
+                        <td>@book.Genre</td>
+                        <td>
+                            <span class="badge @(book.IsAvailable ? "bg-success" : "bg-danger")">
+                                @(book.IsAvailable ? "Available" : "Checked Out")
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {
-        let bookNames = [];
-
-        // Fetch all book names on page load
-        $.get("/Books/GetAllBookNames", function (data) {
-            bookNames = data;
-            $("#bookSearchInput").autocomplete({
-                source: bookNames
-            });
-        });
-
-        // Live search
-        $("#bookSearchInput").on("input", function () {
-            let query = $(this).val();
-            if (query.length > 0) {
-                $.get("/Books/Search", { query: query }, function (data) {
-                    $("#searchResults").html(data);
-                });
-            } else {
-                $("#searchResults").html("");
-            }
-        });
+    // Live search: Automatically submit form on input change
+    document.getElementById("searchInput").addEventListener("input", function() {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => document.getElementById("filterForm").submit(), 500);
     });
-</script>
 
-<!-- Include jQuery UI for Autocomplete -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    // Sorting function
+    function sortTable(column) {
+        let currentUrl = new URL(window.location.href);
+        let currentSort = currentUrl.searchParams.get("sortBy");
+
+        let newSort = column + "_asc";
+        if (currentSort === column + "_asc") {
+            newSort = column + "_desc";
+        }
+
+        currentUrl.searchParams.set("sortBy", newSort);
+        window.location.href = currentUrl.toString();
+    }
+</script>

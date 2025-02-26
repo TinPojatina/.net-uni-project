@@ -1,0 +1,30 @@
+﻿@model LibraryManager.Models.Book
+
+<div class="card">
+    <img src="@Model.CoverImageUrl" class="card-img-top" alt="Book Cover">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <p class="card-text">by @Model.Author</p>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bookDetailsModal-@Model.Id">
+            View Details
+        </button>
+    </div>
+</div>
+
+<!-- Book Details Modal -->
+<div class="modal fade" id="bookDetailsModal-@Model.Id" tabindex="-1" aria-labelledby="bookDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Model.Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Author:</strong> @Model.Author</p>
+                <p><strong>Genre:</strong> @Model.Genre</p>
+                <p><strong>Year:</strong> @Model.PublicationYear</p>
+                <p><strong>Description:</strong> @Model.Description</p>
+            </div>
+        </div>
+    </div>
+</div>

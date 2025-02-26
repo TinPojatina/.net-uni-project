@@ -1,0 +1,24 @@
+﻿@model IEnumerable<LibraryManager.Models.Loan>
+@{
+    ViewData["Title"] = "My Loans";
+}
+
+<h1>My Loans</h1>
+
+<form asp-action="MyLoans" method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select name="status" class="form-control" onchange="this.form.submit()">
+                    <option value="">All</option>
+                    <option value="Active">Active</option>
+                    <option value="Returned">Returned</option>
+                    <option value="Overdue">Overdue</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
+@await Html.PartialAsync("_LoanTable", Model)

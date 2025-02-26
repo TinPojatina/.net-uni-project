@@ -15,52 +15,20 @@ namespace LibraryManager.Services
         {
             _context = context;
         }
-        public async Task<List<string>> GetAllBookNamesAsync()
-        {
-            return await _context.Books
-                .Select(b => b.Title)
-                .ToListAsync();
-        }
 
-        public async Task<List<Book>> GetAllBooksAsync()
-        {
-            return await _context.Books.ToListAsync();
-        }
+        public async Task<IEnumerable<Book>> GetAllBooksAsync() => await _context.Books.ToListAsync();
 
-        public async Task<List<Book>> SearchBooksAsync(string query)
-        {
-            return await _context.Books
-                .Where(b => b.Title.Contains(query) || b.Author.Contains(query))
-                .ToListAsync();
-        }
-
-        public async Task<List<Book>> GetSortedBooksAsync(string sortBy, string order)
-        {
-            IQueryable<Book> books = _context.Books;
-
-            switch (sortBy.ToLower())
-            {
-                case "author":
-                    books = order == "asc" ? books.OrderBy(b => b.Author) : books.OrderByDescending(b => b.Author);
-                    break;
-                case "year":
-                    books = order == "asc" ? books.OrderBy(b => b.PublishedYear) : books.OrderByDescending(b => b.PublishedYear);
-                    break;
-                default:
-                    books = order == "asc" ? books.OrderBy(b => b.Title) : books.OrderByDescending(b => b.Title);
-                    break;
-            }
-
-            return await books.ToListAsync();
-        }
-        public async Task<Book?> GetBookByIdAsync(int id)
-        {
-            return await _context.Books.FindAsync(id);
-        }
+        public async Task<Book> GetBookByIdAsync(int id) => await _context.Books.FindAsync(id);
 
         public async Task AddBookAsync(Book book)
         {
             _context.Books.Add(book);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateBookAsync(Book book)
+        {
+            _context.Books.Update(book);
             await _context.SaveChangesAsync();
         }
 
@@ -72,6 +40,24 @@ namespace LibraryManager.Services
                 _context.Books.Remove(book);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<Book>> GetAvailableBooksAsync() => await _context.Books.Where(b => b.IsAvailable).ToListAsync();
+
+        public async Task<IEnumerable<Book>> GetBooksByGenreAsync(string genre) => await _context.Books.Where(b => b.Genre == genre).ToListAsync();
+
+        public async Task<IEnumerable<Book>> FilterBooksAsync(bool? isAvailable, string genre, int? publicationYear, string author)
+        {
+            var query = _context.Books.AsQueryable();
+            if (isAvailable.HasValue)
+                query = query.Where(b => b.IsAvailable == isAvailable.Value);
+            if (!string.IsNullOrEmpty(genre))
+                query = query.Where(b => b.Genre == genre);
+            if (publicationYear.HasValue)
+                query = query.Where(b => b.PublicationYear == publicationYear.Value);
+            if (!string.IsNullOrEmpty(author))
+                query = query.Where(b => b.Author.Contains(author));
+            return await query.ToListAsync();
         }
     }
 }
