@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Author>
+
+@{
+    ViewData["Title"] = "Authors by Nationality";
+    var nationality = ViewBag.CurrentNationality;
+}
+
+<h1>Authors from @nationality</h1>
+
+<p>
+    <a asp-action="Index" class="btn btn-secondary">Back to All Authors</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Birth Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var author in Model)
+            {
+                <tr>
+                    <td>@author.FirstName @author.LastName</td>
+                    <td>@author.BirthDate.ToString("MM/dd/yyyy")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@author.AuthorId" class="btn btn-sm btn-info">Details</a>
+                        <a asp-action="Edit" asp-route-id="@author.AuthorId" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@author.AuthorId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to show</h1>
+    <p class="lead">
+        Your digital library.
+        @if (ViewBag.IsAuthenticated)
+        {
+            <span>Welcome back, @ViewBag.UserName!</span>
+        }
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Quick Stats</h5>
+            </div>
+            <div class="card-body">
+                <p>Total Books: <strong>@ViewBag.TotalBooks</strong></p>
+                <p>Available Books: <strong>@ViewBag.AvailableBooksCount</strong></p>
+                <p>Total Authors: <strong>@ViewBag.TotalAuthors</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>Quick Links</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Books</h6>
+                        <ul>
+                            <li><a asp-controller="Books" asp-action="Index">All Books</a></li>
+                            <li><a asp-controller="Books" asp-action="Available">Available Books</a></li>
+                            <li><a asp-controller="Books" asp-action="Create">Add New Book</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Authors</h6>
+                        <ul>
+                            <li><a asp-controller="Authors" asp-action="Index">All Authors</a></li>
+                            <li><a asp-controller="Authors" asp-action="MostProlific">Most Prolific Authors</a></li>
+                            <li><a asp-controller="Authors" asp-action="Create">Add New Author</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

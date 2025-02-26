@@ -1,0 +1,33 @@
+﻿@model Author
+
+@{
+    ViewData["Title"] = "Delete Author";
+}
+
+<h1>Delete Author</h1>
+
+<div class="alert alert-danger">
+    <h3>Are you sure you want to delete this author?</h3>
+    <p>This will also delete all books associated with this author.</p>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Full Name</dt>
+            <dd class="col-sm-9">@Model.FirstName @Model.LastName</dd>
+
+            <dt class="col-sm-3">Birth Date</dt>
+            <dd class="col-sm-9">@Model.BirthDate.ToString("MM/dd/yyyy")</dd>
+
+            <dt class="col-sm-3">Nationality</dt>
+            <dd class="col-sm-9">@Model.Nationality</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="AuthorId" />
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

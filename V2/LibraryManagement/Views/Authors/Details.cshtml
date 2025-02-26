@@ -1,0 +1,68 @@
+﻿@model Author
+
+@{
+    ViewData["Title"] = "Author Details";
+}
+
+<h1>@Model.FirstName @Model.LastName</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Full Name</dt>
+            <dd class="col-sm-9">@Model.FirstName @Model.LastName</dd>
+
+            <dt class="col-sm-3">Birth Date</dt>
+            <dd class="col-sm-9">@Model.BirthDate.ToString("MM/dd/yyyy")</dd>
+
+            <dt class="col-sm-3">Nationality</dt>
+            <dd class="col-sm-9">@Model.Nationality</dd>
+
+            <dt class="col-sm-3">Biography</dt>
+            <dd class="col-sm-9">@Model.Biography</dd>
+        </dl>
+    </div>
+</div>
+
+<h4>Books by @Model.FirstName @Model.LastName (@Model.Books.Count)</h4>
+
+@if (Model.Books.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Year</th>
+                    <th>Genre</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.Books)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.PublicationYear</td>
+                        <td>@book.Genre</td>
+                        <td>@Html.BookAvailabilityLabel(book.IsAvailable)</td>
+                        <td>
+                            <a asp-controller="Books" asp-action="Details" asp-route-id="@book.BookId" class="btn btn-sm btn-info">Details</a>
+                            <a asp-controller="Books" asp-action="Edit" asp-route-id="@book.BookId" class="btn btn-sm btn-warning">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No books available for this author.</p>
+}
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.AuthorId" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

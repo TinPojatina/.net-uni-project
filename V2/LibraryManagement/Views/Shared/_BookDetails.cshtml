@@ -1,0 +1,28 @@
+﻿@model Book
+
+<dl class="row">
+    <dt class="col-sm-3">Title</dt>
+    <dd class="col-sm-9">@Model.Title</dd>
+
+    <dt class="col-sm-3">Author</dt>
+    <dd class="col-sm-9">
+        <a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.AuthorId">
+            @Model.Author.FirstName @Model.Author.LastName
+        </a>
+    </dd>
+
+    <dt class="col-sm-3">ISBN</dt>
+    <dd class="col-sm-9">@Model.ISBN</dd>
+
+    <dt class="col-sm-3">Publication Year</dt>
+    <dd class="col-sm-9">@Model.PublicationYear</dd>
+
+    <dt class="col-sm-3">Price</dt>
+    <dd class="col-sm-9">@Model.Price.ToString("C")</dd>
+
+    <dt class="col-sm-3">Genre</dt>
+    <dd class="col-sm-9">@Model.Genre</dd>
+
+    <dt class="col-sm-3">Availability</dt>
+    <dd class="col-sm-9">@Html.BookAvailabilityLabel(Model.IsAvailable)</dd>
+</dl>
