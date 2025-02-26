@@ -1,2 +1,8 @@
 application/cache
 .vs/
+V2/LibraryManager/bin
+V2/LibraryManager/obj
+V1/FinanceTracker/bin
+V1/FinanceTracker/obj
+V3/FinanceTrackerApi/obj
+V3/FinanceTrackerApi/bin
