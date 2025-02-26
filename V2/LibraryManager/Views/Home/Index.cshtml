@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Library Manager";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Find Your Next Book</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <input type="text" id="bookSearchInput" class="form-control" placeholder="Search for a book...">
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-8 offset-md-2">
+            <div id="searchResults"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        let bookNames = [];
+
+        // Fetch all book names on page load
+        $.get("/Books/GetAllBookNames", function (data) {
+            bookNames = data;
+            $("#bookSearchInput").autocomplete({
+                source: bookNames
+            });
+        });
+
+        // Live search
+        $("#bookSearchInput").on("input", function () {
+            let query = $(this).val();
+            if (query.length > 0) {
+                $.get("/Books/Search", { query: query }, function (data) {
+                    $("#searchResults").html(data);
+                });
+            } else {
+                $("#searchResults").html("");
+            }
+        });
+    });
+</script>
+
+<!-- Include jQuery UI for Autocomplete -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

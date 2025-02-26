@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Z4KU6K0Q9Mg=",
+  "dgSpecHash": "3Hoy4SUuREM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\tinp9\\Source\\Repos\\TinPojatina\\.net-uni-project\\V1\\FinanceTracker\\FinanceTracker.csproj",
+  "projectFilePath": "C:\\Users\\tinp9\\source\\repos\\TinPojatina\\.net-uni-project\\V1\\FinanceTracker\\FinanceTracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tinp9\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\tinp9\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -81,7 +81,7 @@
     "C:\\Users\\tinp9\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\9.0.2\\microsoft.entityframeworkcore.relational.9.0.2.nupkg.sha512",
     "C:\\Users\\tinp9\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\9.0.2\\microsoft.entityframeworkcore.sqlite.9.0.2.nupkg.sha512",
     "C:\\Users\\tinp9\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\9.0.2\\microsoft.entityframeworkcore.sqlite.core.9.0.2.nupkg.sha512",
-    "C:\\Users\\tinp9\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\8.0.11\\microsoft.entityframeworkcore.tools.8.0.11.nupkg.sha512",
+    "C:\\Users\\tinp9\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\9.0.2\\microsoft.entityframeworkcore.tools.9.0.2.nupkg.sha512",
     "C:\\Users\\tinp9\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.2\\microsoft.extensions.caching.abstractions.9.0.2.nupkg.sha512",
     "C:\\Users\\tinp9\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.2\\microsoft.extensions.caching.memory.9.0.2.nupkg.sha512",
     "C:\\Users\\tinp9\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.2\\microsoft.extensions.configuration.abstractions.9.0.2.nupkg.sha512",

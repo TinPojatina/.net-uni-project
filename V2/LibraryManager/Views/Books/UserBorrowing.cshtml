@@ -1,0 +1,45 @@
+﻿@model IEnumerable<LibraryManager.Models.Borrowing>
+
+@{
+    ViewData["Title"] = "My Borrowed Books";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">My Borrowed Books</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Borrow Date</th>
+                <th>Return Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var borrow in Model)
+            {
+                <tr>
+                    <td>@borrow.Book.Title</td>
+                    <td>@borrow.BorrowDate.ToShortDateString()</td>
+                    <td>
+                        @(borrow.ReturnDate.HasValue ? borrow.ReturnDate.Value.ToShortDateString() : "Not Returned")
+                    </td>
+                    <td>
+                        @if (!borrow.ReturnDate.HasValue)
+                        {
+                            <form method="post" action="@Url.Action("ReturnBook", "Books")">
+                                <input type="hidden" name="borrowId" value="@borrow.Id" />
+                                <button type="submit" class="btn btn-warning">Return</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="text-success">Returned</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

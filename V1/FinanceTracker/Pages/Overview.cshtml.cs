@@ -22,12 +22,10 @@ namespace FinanceTracker.Pages
         {
             var transactions = await _context.Transactions.ToListAsync();
 
-            // Calculate Total Income (only from Salary)
             TotalIncome = transactions
                 .Where(t => t.IsIncome)
                 .Sum(t => t.Amount);
 
-            // Calculate Outgoing Transactions by Category
             ChartData = new List<decimal>
             {
                 transactions.Where(t => !t.IsIncome && t.Category == Category.Food).Sum(t => t.Amount),

@@ -1,0 +1,47 @@
+﻿<div class="modal fade" id="borrowBookModal" tabindex="-1" aria-labelledby="borrowBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="borrowBookModalLabel">@Model.Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Author:</strong> @Model.Author</p>
+                <p><strong>Available Copies:</strong> <span id="availableCopies">@Model.AvailableCopies</span></p>
+
+                <div id="borrowSuccessMessage" class="alert alert-success d-none">
+                    Book borrowed successfully!
+                </div>
+
+                <form id="borrowBookForm">
+                    <input type="hidden" name="bookId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-success" id="borrowButton">Confirm Borrow</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#borrowBookForm").submit(function (e) {
+            e.preventDefault();
+            $("#borrowButton").prop("disabled", true).text("Borrowing...");
+
+            $.post("@Url.Action("BorrowBookConfirm", "Books")", $(this).serialize(), function () {
+                $("#borrowSuccessMessage").removeClass("d-none");
+
+                setTimeout(function () {
+                    $("#borrowBookModal").modal("hide");
+                    location.reload();
+                }, 2000);
+            })
+            .fail(function () {
+                alert("An error occurred while borrowing the book. Please try again.");
+                $("#borrowButton").prop("disabled", false).text("Confirm Borrow");
+            });
+        });
+    });
+</script>

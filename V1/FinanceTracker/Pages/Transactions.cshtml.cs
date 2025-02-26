@@ -33,13 +33,11 @@ namespace FinanceTracker.Pages
         {
             IQueryable<Transaction> query = _context.Transactions;
 
-            // Filtering: Show all, only income, or only expenses
             if (FilterType == "income")
                 query = query.Where(t => t.IsIncome);
             else if (FilterType == "expense")
                 query = query.Where(t => !t.IsIncome);
 
-            // Sorting logic
             query = SortBy switch
             {
                 "amount" => (SortOrder == "desc") ? query.OrderByDescending(t => (double)t.Amount) : query.OrderBy(t => (double)t.Amount),

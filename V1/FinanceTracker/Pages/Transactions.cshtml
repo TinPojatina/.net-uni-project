@@ -7,7 +7,6 @@
 
 <h2>Transaction List</h2>
 
-<!-- Filter by Type -->
 <form method="get" class="mb-3">
     <label for="filterType">Filter:</label>
     <select name="FilterType" id="filterType" class="form-control d-inline w-auto" onchange="this.form.submit()">
@@ -19,7 +18,6 @@
     <input type="hidden" name="SortBy" value="@Model.SortBy" />
 </form>
 
-<!-- Sorting Buttons -->
 <div class="mb-3">
     <a href="?SortBy=date&SortOrder=@newSortOrder&FilterType=@Model.FilterType" class="btn btn-secondary">
         Sort by Date (@(Model.SortOrder == "asc" ? "⬆️" : "⬇️"))
@@ -29,7 +27,6 @@
     </a>
 </div>
 
-<!-- Transaction Table -->
 <table class="table table-striped mt-3">
     <thead>
         <tr>
@@ -63,7 +60,6 @@
     </tbody>
 </table>
 
-<!-- Include Modals -->
 @foreach (var transaction in Model.Transactions)
 {
     @await Html.PartialAsync("_EditTransaction", transaction)

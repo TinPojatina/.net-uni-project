@@ -1,0 +1,65 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using LibraryManager.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="/">Library Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "Home")">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("BooksTable", "Books")">All Books</a>
+                </li>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("UserBorrowings", "Books")">My Borrowed Books</a>
+                    </li>
+
+                    @if ((await UserManager.GetUserAsync(User)) is ApplicationUser user && await UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("BooksTable", "Books")">Manage Books</a>
+                        </li>
+                    }
+                }
+            </ul>
+
+            <ul class="navbar-nav">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">Hello, @UserManager.GetUserName(User)!</a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="form-inline" method="post" asp-area="" asp-controller="Account" asp-action="Logout">
+                            <button type="submit" class="btn btn-outline-light">Logout</button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="modal" data-target="#registerModal">Register</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Ensure correct models are passed to partial views -->
+@await Html.PartialAsync("_LoginModal", new LibraryManager.ViewModels.LoginViewModel())
+@await Html.PartialAsync("_RegisterModal", new LibraryManager.ViewModels.RegisterViewModel())
